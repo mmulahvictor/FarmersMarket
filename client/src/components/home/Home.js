@@ -9,8 +9,8 @@ function Home () {
                 <h3>Raw<span >Farm</span><span id='red'>Products</span></h3>
             </div>
             <div className='login'>
-                <Link className='link'>Login</Link>
-                <Link className='link'>Sign In</Link>
+                <Link to='/login' className='link'>Login</Link>
+                <Link to="/signup" className='link'>Sign In</Link>
             </div>
             <div className='header'>
                 <p>Sell and buy your farm produce for <span>FREE</span></p>
