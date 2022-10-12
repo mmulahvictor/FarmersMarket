@@ -1,10 +1,10 @@
 import './App.css';
 import Home from './components/home/Home';
 import { Route, Routes } from 'react-router-dom';
-import Signup from './components/signup/Signup';
+import Signup from './components/signup/FarmerSignup';
 import Login from './components/signup/Login';
 
-function App() {
+function App () {
   return (
     <>
       <Routes>

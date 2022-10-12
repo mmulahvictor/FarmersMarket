@@ -1,10 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import Login from './Login';
-import './Home.css';
+import Signup from './FarmerSignup';
 
-function Signup () {
+function Login () {
     const [ farmer, setFarmer ] = useState( false );
     const [ customer, setCustomer ] = useState( false );
 
@@ -29,10 +28,10 @@ function Signup () {
                 <label htmlFor="Customer">Customer</label>
             </form>
 
-            { farmer && <Login /> }
-            { customer && <Login /> }
+            { farmer && <Signup /> }
+            { customer && <Signup /> }
         </>
     );
 }
 
-export default Signup;
+export default Login;

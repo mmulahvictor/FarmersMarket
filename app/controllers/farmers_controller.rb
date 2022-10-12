@@ -13,7 +13,7 @@ class FarmersController < ApplicationController
 
     def show
         farmer = find_farmer
-        render json: farmer, serializer: FarmerWithItemSerializer, status: :ok
+        render json: farmer, serializer: FarmerWithItemsSerializer, status: :ok
     end
 
     def destroy
