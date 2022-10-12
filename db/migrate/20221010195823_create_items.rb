@@ -4,8 +4,8 @@ class CreateItems < ActiveRecord::Migration[7.0]
       t.string :name
       t.string :image_url
       t.string :quantity
-      t.string :farmer_id
-      t.string :customer_id
+      t.integer :farmer_id
+      t.integer :customer_id
 
       t.timestamps
     end
