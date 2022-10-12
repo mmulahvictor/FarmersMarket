@@ -29,3 +29,5 @@ group :development do
 end
 
 gem 'email_validator'
+
+gem 'active_model_serializers'
