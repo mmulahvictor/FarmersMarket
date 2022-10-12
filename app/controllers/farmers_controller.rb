@@ -1,4 +1,7 @@
 class FarmersController < ApplicationController
+    rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
+    rescue_from ActiveRecord::RecordNotFound, with: :render_record_not_found_response
+
     def index
         render json: Farmer.all
     end
@@ -9,20 +12,31 @@ class FarmersController < ApplicationController
     end
 
     def show
-        render json: find_farmer, status: :ok
+        farmer = find_farmer
+        render json: farmer, serializer: FarmerWithItemSerializer, status: :ok
     end
 
     def destroy
-
+        farmer = find_farmer
+        farmer.destroy
+        head :no_content
     end
 
     private
 
     def find_farmer
-        Farmer.find_by(id: params[:id])
+        Farmer.find(params[:id])
     end
 
     def farmer_params
         params.permit(:name, :phone, :location, :email, :password)
+    end
+
+    def render_record_not_found_response
+        render json: { error: "Farmer not found" }, status: :not_found
+    end
+
+    def render_unprocessable_entity_response(exception)
+        render json: {errors: exception.record.errors.full_messages}, status: :unprocessable_entity
     end
 end
