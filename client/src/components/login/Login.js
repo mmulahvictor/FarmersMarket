@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import Signup from './FarmerSignup';
+import FarmerSignup from '../signup/FarmerSignup';
+import CustomerSignup from '../signup/CustomerSignup'
 
 function Login () {
     const [ farmer, setFarmer ] = useState( false );
@@ -28,8 +29,8 @@ function Login () {
                 <label htmlFor="Customer">Customer</label>
             </form>
 
-            { farmer && <Signup /> }
-            { customer && <Signup /> }
+            { farmer && <FarmerSignup /> }
+            { customer && <CustomerSignup /> }
         </>
     );
 }

@@ -1,120 +1,128 @@
-// import axios from 'axios';
-// import React from 'react';
-// import { useState } from 'react';
-// import { Link } from 'react-router-dom';
+import { useState } from "react";
+import styled from "styled-components";
 
-// function Signup () {
+function FarmerSignup () {
+    const [ errors, setErrors ] = useState( [] );
+    const [ formData, setFormData ] = useState( {
+        name: "",
+        phone: "",
+        location: "",
+        email: "",
+        password: "",
+    } );
 
-//     const url = '/farmers';
-//     const [ data, setData ] = useState( {
-//         name: "",
-//         email: "",
-//         location: "",
-//         password: "",
-//         confpassword: "",
-//         phone: ""
-//     } );
+    async function handleSubmit ( e ) {
+        e.preventDefault();
+        // fetch returns a Promise, we must await it
+        const response = await fetch( "/farmers", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify( formData ),
+        } );
+        // response.json() returns a Promise, we must await it
+        const data = await response.json();
+        if ( response.ok )
+        {
+            console.log( "Farmer created:", data );
+            setFormData( "" )
+        } else
+        {
+            setErrors( data.errors );
+        }
+        
+    }
 
-//     // functions to update states
-//     const handleSubmit = ( e ) => {
-//         e.preventDefault();
-//         if ( data.password !== data.confpassword )
-//         {
-//             alert( "password Not Match" );
-//         } else
-//         {
-//             axios.post( url, {
-//                 name: data.name,
-//                 phone: data.phone,
-//                 email: data.email,
-//                 password: data.password,
-//                 location: data.location
-//             } );
+    function handleChange ( e ) {
+        setFormData( {
+            ...formData,
+            [ e.target.id ]: e.target.value,
+        } );
+    }
 
-//             alert( 'Thanks for registaring with us! ' + data.name );
-//         }
-//         setData( '' );
-//     };
+    return (
+        <Wrapper>
+            <h1>Farmer's Signup</h1>
+            <form onSubmit={ handleSubmit }>
+                <FormGroup>
+                    <label htmlFor="name">Name</label>
+                    <input
+                        type="text"
+                        id="name"
+                        value={ formData.name }
+                        onChange={ handleChange }
+                    />
+                </FormGroup>
+                <FormGroup>
+                    <label htmlFor="phone">Phone</label>
+                    <input
+                        type="number"
+                        id="phone"
+                        value={ formData.phone }
+                        onChange={ handleChange }
+                    />
+                </FormGroup>
+                <FormGroup>
+                    <label htmlFor="location">Location</label>
+                    <input
+                        type="text"
+                        id="location"
+                        value={ formData.location }
+                        onChange={ handleChange }
+                    />
+                </FormGroup>
+                <FormGroup>
+                    <label htmlFor="email">Email</label>
+                    <input
+                        type="text"
+                        id="email"
+                        value={ formData.email }
+                        onChange={ handleChange }
+                    />
+                </FormGroup>
+                <FormGroup>
+                    <label htmlFor="password">Password</label>
+                    <textarea
+                        id="password"
+                        value={ formData.password }
+                        onChange={ handleChange }
+                    />
+                </FormGroup>
+                
+                { errors.length > 0 && (
+                    <ul style={ { color: "red" } }>
+                        { errors.map( ( error ) => (
+                            <li key={ error }>{ error }</li>
+                        ) ) }
+                    </ul>
+                ) }
+                <SubmitButton type="submit">Sign Up</SubmitButton>
+            </form>
+        </Wrapper>
+    );
+}
+const Wrapper = styled.section`
+  max-width: 500px;
+  margin: 32px auto;
+  padding: 32px;
+`;
 
-//     const handleChange = ( e ) => {
-//         e.preventDefault()
-//         setData( { ...data, [ e.target.name ]: e.target.value } );
-//     };
+const FormGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+`;
 
-//     return (
-//         <div className="signup">
-//             <p>
-//                 Already have an account?
-//                 <Link to="/login" className='link'>Login</Link>
-//             </p>
-//             <header className="signup-header">
-//                 <form onSubmit={ handleSubmit } autocomplete="off">
-//                     <h3>Farmer's Sign-up Form </h3>
-//                     <label > Name: </label><br />
-//                     <input
-//                         type="text"
-//                         name='name'
-//                         value={ data.name }
-//                         required
-//                         onChange={ handleChange }
-//                         autoComplete='off'
-//                     /><br />
+const SubmitButton = styled.button`
+  background: blue;
+  color: yellow;
+  font-weight: bold;
+  font-family: inherit;
+  font-size: 1.2rem;
+  border: none;
+  padding: 8px 16px;
+  cursor: pointer;
+`;
 
-//                     <label> Email: </label><br />
-//                     <input
-//                         type="email"
-//                         name='email'
-//                         value={ data.email }
-//                         required
-//                         onChange={ handleChange }
-//                         autoComplete='off'
-//                     /><br />
-
-//                     <label> Password: </label><br />
-//                     <input
-//                         type="password"
-//                         name='password'
-//                         value={ data.password }
-//                         required
-//                         onChange={ handleChange }
-//                     /><br />
-
-//                     <label> Confirm Password: </label><br />
-//                     <input
-//                         type="password"
-//                         name='confpassword'
-//                         value={ data.confpassword }
-//                         required
-//                         onChange={ handleChange }
-//                     /><br />
-
-//                     <label > Location: </label><br />
-//                     <input
-//                         type="text"
-//                         name='location'
-//                         value={ data.location }
-//                         required
-//                         onChange={ handleChange }
-//                         autoComplete='off'
-//                     /><br />
-
-//                     <label > Phone: </label><br />
-//                     <input
-//                         type="tel"
-//                         name='phone'
-//                         value={ data.phone }
-//                         required
-//                         onChange={ handleChange }
-//                         autoComplete='off'
-//                     /><br />
-
-//                     <input
-//                         type="submit" value="Submit" />
-//                 </form>
-//             </header>
-
-//         </div>
-//     );
-// }
-
-// export default Signup;
+export default FarmerSignup;
