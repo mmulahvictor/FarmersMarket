@@ -1,13 +1,13 @@
 class ApplicationController < ActionController::API
     include ActionController::Cookies
-  before_action :authorize
+  # before_action :authorize
 
   rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
 
   private
 
   def authorize
-    @current_farmer = Farmer.find_by(id: session[:user_id])
+    @current_farmer = Farmer.find_by(id: session[:farmer_id])
 
     render json: { errors: ["Not authorized"] }, status: :unauthorized unless @current_farmer
   end

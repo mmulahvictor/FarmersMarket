@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Error, Input, FormField, Label, Textarea } from "../styles";
+import { Button, Error, Input, FormField, Label } from "../styles";
 
 function SignUpForm ( { onLogin } ) {
     const [ username, setUsername ] = useState( "" );
@@ -32,7 +32,7 @@ function SignUpForm ( { onLogin } ) {
             setIsLoading( false );
             if ( r.ok )
             {
-                r.json().then( ( user ) => onLogin( user ) );
+                r.json().then( ( farmer ) => onLogin( farmer ) );
             } else
             {
                 r.json().then( ( err ) => setErrors( err.errors ) );
@@ -82,9 +82,9 @@ function SignUpForm ( { onLogin } ) {
                 />
             </FormField>
             <FormField>
-                <Label htmlFor="email">Location</Label>
-                <Textarea
-                    rows="3"
+                <Label htmlFor="email">Email</Label>
+                <Input
+                    type="text"
                     id="email"
                     value={ email }
                     onChange={ ( e ) => setEmail( e.target.value ) }
@@ -92,8 +92,8 @@ function SignUpForm ( { onLogin } ) {
             </FormField>
             <FormField>
                 <Label htmlFor="location">Location</Label>
-                <Textarea
-                    rows="3"
+                <Input
+                    type="text"
                     id="location"
                     value={ location }
                     onChange={ ( e ) => setLocation( e.target.value ) }

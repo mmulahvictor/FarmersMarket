@@ -9,8 +9,8 @@ function ItemList () {
     useEffect( () => {
         fetch( "/items" )
             .then( ( r ) => r.json() )
-            .then( setItem );
-    }, [] );
+            .then( setItem(item) );
+    }, [item] );
 
     return (
         <Wrapper>
@@ -27,12 +27,12 @@ function ItemList () {
                     </Item>
                 ) )
             ) : (
-                <>
+                <div>
                     <h2>No Items Found</h2>
                     <Button as={ Link } to="/new">
                         Make a New Item
                     </Button>
-                </>
+                </div>
             ) }
         </Wrapper>
     );

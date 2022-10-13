@@ -4,7 +4,7 @@ class ItemsController < ApplicationController
   end
 
   def create
-    item = @current_farmer.recipes.create!(item_params)
+    item = @current_farmer.itemscreate!(item_params)
     render json: item, status: :created
   end
 

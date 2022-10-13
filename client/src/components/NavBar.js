@@ -16,11 +16,11 @@ function NavBar ( { farmer, setFarmer } ) {
     return (
         <Wrapper>
             <Logo>
-                <Link to="/">Reciplease</Link>
+                <Link to="/">View Items</Link>
             </Logo>
             <Nav>
                 <Button as={ Link } to="/new">
-                    New Recipe
+                    New Item
                 </Button>
                 <Button variant="outline" onClick={ handleLogoutClick }>
                     Logout
@@ -40,7 +40,7 @@ const Wrapper = styled.header`
 const Logo = styled.h1`
   font-family: "Permanent Marker", cursive;
   font-size: 3rem;
-  color: deeppink;
+  color: green;
   margin: 0;
   line-height: 1;
 
