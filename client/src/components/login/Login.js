@@ -1,56 +1,59 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import FarmerLogin from './FarmerLogin';
-import CustomerLogin from './CustomerLogin';
+import { useState } from "react";
+import styled from "styled-components";
+import LoginForm from "./LoginForm";
+import SignUpForm from "../signup/SignupForm";
+import { Button } from "../styles";
 
-function Login () {
-    const [ farmer, setFarmer ] = useState( false );
-    const [ customer, setCustomer ] = useState( false );
-    // const [ user, setUser ] = useState( null );
-
-    useEffect( () => {
-        fetch( "/farmers" ).then( ( response ) => {
-            if ( response.ok )
-            {
-                response.json().then( ( farmer ) => setFarmer( farmer ) );
-            }
-        } );
-    }, [] );
-
-    function handleLogin ( farmer ) {
-        setFarmer( farmer );
-    }
-
-    // function handleLogout () {
-    //     setFarmer( null );
-    // }
-
-    const showFarmer = ( e ) => {
-        setFarmer( true );
-        setCustomer( false );
-    };
-
-    const showCustomer = ( e ) => {
-        setCustomer( true );
-        setFarmer( false );
-    };
+function Login ( { onLogin } ) {
+    const [ showLogin, setShowLogin ] = useState( true );
 
     return (
-        <>
-            <Link to="/" className='link'>Home</Link>
-
-            <form>
-                <input type="radio" name='user' value='farmer' onClick={ showFarmer } />
-                <label htmlFor="Farmer">Farmer</label>
-                <input type="radio" name='user' value='customer' onClick={ showCustomer } />
-                <label htmlFor="Customer">Customer</label>
-            </form>
-
-            { farmer && <FarmerLogin onLogin={ handleLogin } /> }
-            { customer && <CustomerLogin /> }
-        </>
+        <Wrapper>
+            <Logo>Reciplease</Logo>
+            { showLogin ? (
+                <>
+                    <LoginForm onLogin={ onLogin } />
+                    <Divider />
+                    <p>
+                        Don't have an account? &nbsp;
+                        <Button color="secondary" onClick={ () => setShowLogin( false ) }>
+                            Sign Up
+                        </Button>
+                    </p>
+                </>
+            ) : (
+                <>
+                    <SignUpForm onLogin={ onLogin } />
+                    <Divider />
+                    <p>
+                        Already have an account? &nbsp;
+                        <Button color="secondary" onClick={ () => setShowLogin( true ) }>
+                            Log In
+                        </Button>
+                    </p>
+                </>
+            ) }
+        </Wrapper>
     );
 }
+
+const Logo = styled.h1`
+  font-family: "Permanent Marker", cursive;
+  font-size: 3rem;
+  color: deeppink;
+  margin: 8px 0 16px;
+`;
+
+const Wrapper = styled.section`
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 16px;
+`;
+
+const Divider = styled.hr`
+  border: none;
+  border-bottom: 1px solid #ccc;
+  margin: 16px 0;
+`;
 
 export default Login;
