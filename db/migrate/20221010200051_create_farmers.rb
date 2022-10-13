@@ -5,7 +5,7 @@ class CreateFarmers < ActiveRecord::Migration[7.0]
       t.integer :phone
       t.string :location
       t.string :email
-      t.string :password
+      t.string :password_digest
 
       t.timestamps
     end
