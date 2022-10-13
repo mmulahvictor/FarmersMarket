@@ -41,3 +41,4 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_10_200140) do
 
   add_foreign_key "items", "farmers"
 end
+

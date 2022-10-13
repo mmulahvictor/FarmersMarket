@@ -1,3 +1,4 @@
 class ItemsSerializer < ActiveModel::Serializer
-  attributes :id, :name, :image_url, :quantity, :farmer_id, :customer_id
+  attributes :id, :name, :image_url, :quantity
+  has_one :farmer
 end
