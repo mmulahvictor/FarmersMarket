@@ -1,13 +1,15 @@
 class FarmersController < ApplicationController
     rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
     rescue_from ActiveRecord::RecordNotFound, with: :render_record_not_found_response
+    before_action :authorize, only: [:show]
 
     def index
         render json: Farmer.all
     end
 
     def create
-        farmer = Farmer.create(farmer_params)
+        farmer = Farmer.create!(farmer_params)
+        session[:id] = farmer.id
         render json: farmer, status: :created
     end
 
@@ -25,11 +27,15 @@ class FarmersController < ApplicationController
     private
 
     def find_farmer
-        Farmer.find(params[:id])
+        Farmer.find(session[:id])
+    end
+
+    def authorize
+        return render json: { error: "Not authorized" }, status: :unauthorized unless session.include? :id
     end
 
     def farmer_params
-        params.permit(:name, :phone, :location, :email, :password)
+        params.permit(:name, :phone, :location, :email, :password, :password_confirmation)
     end
 
     def render_record_not_found_response

@@ -1,9 +1,13 @@
 class SessionsController < ApplicationController
 
     def create
-        farmer = Farmer.find_by(username: params[:username])
-        session[:id] = farmer.id
-        render json: farmer
+        farmer = Farmer.find_by(email: params[:email])
+        if farmer&.authenticate(params[:password])
+          session[:id] = farmer.id
+          render json: farmer, status: :created
+        else
+          render json: {error: "Invalid email or password"}, status: :unauthorized
+        end
     end
 
     def destroy
