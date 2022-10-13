@@ -1,128 +1,92 @@
-import { useState } from "react";
-import styled from "styled-components";
+import React, { useState } from "react";
 
-function FarmerSignup () {
-    const [ errors, setErrors ] = useState( [] );
-    const [ formData, setFormData ] = useState( {
-        name: "",
-        phone: "",
-        location: "",
-        email: "",
-        password: "",
-    } );
+function FarmerSignup ( { setFarmer } ) {
+    const [ name, setName ] = useState( "" );
+    const [ password, setPassword ] = useState( "" );
+    const [ location, setLocation ] = useState( "" );
+    const [ email, setEmail ] = useState( "" );
+    const [ phone, setPhone ] = useState( "" );
+    const [ passwordConfirmation, setPasswordConfirmation ] = useState( "" );
 
-    async function handleSubmit ( e ) {
+    function handleSubmit ( e ) {
         e.preventDefault();
-        // fetch returns a Promise, we must await it
-        const response = await fetch( "/farmers", {
+        fetch( "/signup", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify( formData ),
-        } );
-        // response.json() returns a Promise, we must await it
-        const data = await response.json();
-        if ( response.ok )
-        {
-            console.log( "Farmer created:", data );
-            setFormData( "" )
-        } else
-        {
-            setErrors( data.errors );
-        }
-        
-    }
-
-    function handleChange ( e ) {
-        setFormData( {
-            ...formData,
-            [ e.target.id ]: e.target.value,
+            body: JSON.stringify( {
+                name,
+                phone,
+                location,
+                email,
+                password,
+                password_confirmation: passwordConfirmation,
+            } ),
+        } ).then( ( r ) => {
+            if ( r.ok )
+            {
+                r.json().then( ( user ) => setFarmer( user ) );
+            }
         } );
     }
 
     return (
-        <Wrapper>
-            <h1>Farmer's Signup</h1>
+        <div>
             <form onSubmit={ handleSubmit }>
-                <FormGroup>
-                    <label htmlFor="name">Name</label>
-                    <input
-                        type="text"
-                        id="name"
-                        value={ formData.name }
-                        onChange={ handleChange }
-                    />
-                </FormGroup>
-                <FormGroup>
-                    <label htmlFor="phone">Phone</label>
-                    <input
-                        type="number"
-                        id="phone"
-                        value={ formData.phone }
-                        onChange={ handleChange }
-                    />
-                </FormGroup>
-                <FormGroup>
-                    <label htmlFor="location">Location</label>
-                    <input
-                        type="text"
-                        id="location"
-                        value={ formData.location }
-                        onChange={ handleChange }
-                    />
-                </FormGroup>
-                <FormGroup>
-                    <label htmlFor="email">Email</label>
-                    <input
-                        type="text"
-                        id="email"
-                        value={ formData.email }
-                        onChange={ handleChange }
-                    />
-                </FormGroup>
-                <FormGroup>
-                    <label htmlFor="password">Password</label>
-                    <textarea
-                        id="password"
-                        value={ formData.password }
-                        onChange={ handleChange }
-                    />
-                </FormGroup>
-                
-                { errors.length > 0 && (
-                    <ul style={ { color: "red" } }>
-                        { errors.map( ( error ) => (
-                            <li key={ error }>{ error }</li>
-                        ) ) }
-                    </ul>
-                ) }
-                <SubmitButton type="submit">Sign Up</SubmitButton>
+                <h1>Sign Up</h1>
+                <label htmlFor="name">Name</label>
+                <input
+                    type="text"
+                    id="name"
+                    autoComplete="off"
+                    value={ name }
+                    onChange={ ( e ) => setName( e.target.value ) }
+                />
+                <label htmlFor="phone">Phone</label>
+                <input
+                    type="number"
+                    id="phone"
+                    autoComplete="off"
+                    value={ phone }
+                    onChange={ ( e ) => setPhone( e.target.value ) }
+                />
+                <label htmlFor="email">Email</label>
+                <input
+                    type="email"
+                    id="email"
+                    autoComplete="off"
+                    value={ email }
+                    onChange={ ( e ) => setEmail( e.target.value ) }
+                />
+                <label htmlFor="location">Location</label>
+                <input
+                    type="text"
+                    id="location"
+                    autoComplete="off"
+                    value={ location }
+                    onChange={ ( e ) => setLocation( e.target.value ) }
+                />
+                <label htmlFor="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    value={ password }
+                    onChange={ ( e ) => setPassword( e.target.value ) }
+                    autoComplete="current-password"
+                />
+                <label htmlFor="password">Password Confirmation</label>
+                <input
+                    type="password"
+                    id="password_confirmation"
+                    value={ passwordConfirmation }
+                    onChange={ ( e ) => setPasswordConfirmation( e.target.value ) }
+                    autoComplete="current-password"
+                />
+                <button type="submit">Sign Up</button>
             </form>
-        </Wrapper>
+        </div>
     );
 }
-const Wrapper = styled.section`
-  max-width: 500px;
-  margin: 32px auto;
-  padding: 32px;
-`;
-
-const FormGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 16px;
-`;
-
-const SubmitButton = styled.button`
-  background: blue;
-  color: yellow;
-  font-weight: bold;
-  font-family: inherit;
-  font-size: 1.2rem;
-  border: none;
-  padding: 8px 16px;
-  cursor: pointer;
-`;
 
 export default FarmerSignup;

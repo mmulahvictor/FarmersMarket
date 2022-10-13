@@ -4,8 +4,8 @@ class CreateItems < ActiveRecord::Migration[7.0]
       t.string :name
       t.string :image_url
       t.string :quantity
-      t.integer :farmer_id
-      t.integer :customer_id
+      t.belongs_to :farmer, null: false, foreign_key: true
+      # t.belongs_to :customer, null: false, foreign_key: true
 
       t.timestamps
     end

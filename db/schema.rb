@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema[7.0].define(version: 2022_10_10_200140) do
   create_table "customers", force: :cascade do |t|
-    t.string "name"
+    t.string "username"
     t.string "email"
     t.string "password_digest"
     t.datetime "created_at", null: false
@@ -20,7 +20,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_10_200140) do
   end
 
   create_table "farmers", force: :cascade do |t|
-    t.string "name"
+    t.string "username"
     t.integer "phone"
     t.string "location"
     t.string "email"
@@ -33,10 +33,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_10_200140) do
     t.string "name"
     t.string "image_url"
     t.string "quantity"
-    t.integer "farmer_id"
-    t.integer "customer_id"
+    t.integer "farmer_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["farmer_id"], name: "index_items_on_farmer_id"
   end
 
+  add_foreign_key "items", "farmers"
 end
