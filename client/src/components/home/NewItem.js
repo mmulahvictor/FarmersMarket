@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useHistory } from "react-router";
+// import { useHistory } from "react-router";
 import styled from "styled-components";
 import { Button, Error, FormField, Input, Label} from "../styles";
 
@@ -9,7 +9,7 @@ function NewItem ( { farmer } ) {
     const [ image, setImage ] = useState("https://rb.gy/dfu1ad");
     const [ errors, setErrors ] = useState( [] );
     const [ isLoading, setIsLoading ] = useState( false );
-    const history = useHistory();
+    // const history = useHistory();
 
     function handleSubmit ( e ) {
         e.preventDefault();
@@ -28,7 +28,7 @@ function NewItem ( { farmer } ) {
             setIsLoading( false );
             if ( r.ok )
             {
-                history.push( "/" );
+                // history.push( "/" );
             } else
             {
                 r.json().then( ( err ) => setErrors( err.errors ) );
