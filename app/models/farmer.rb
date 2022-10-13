@@ -1,5 +1,7 @@
 class Farmer < ApplicationRecord
-    # has_secure_password
+    has_secure_password
     has_many :items, dependent: :destroy
-    has_many :customers, through: :items
+    validates :username, presence: true, uniqueness: true
+    validates :email, uniqueness: true
+    # has_many :customers, through: :items
 end
