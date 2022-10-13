@@ -1,8 +1,7 @@
 Rails.application.routes.draw do
-  resources :customers, only: [:create]
-  resources :farmers, only: [:index, :show, :destroy]
-  resources :items
-  post "/login", to: "sessions#create"
-  delete "/logout", to: "sessions#destroy"
+  resources :items, only: [:index, :create]
   post "/signup", to: "farmers#create"
+  get "/me", to: "farmers#show"
+  post "/login", to: "session#create"
+  delete "/logout", to: "session#destroy"
 end
