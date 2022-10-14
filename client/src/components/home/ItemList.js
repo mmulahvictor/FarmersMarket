@@ -1,30 +1,44 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { Box, Button } from "../styles";
+import { Button } from "../styles";
+import EditItem from "./EditItem";
 
 function ItemList () {
-    const [ item, setItem ] = useState( [] );
+    const [ items, setItem ] = useState( [] );
 
     useEffect( () => {
         fetch( "/items" )
             .then( ( r ) => r.json() )
-            .then( setItem(item) );
-    }, [item] );
+            .then( setItem );
+    }, [] );
+
+    function handleDeleteClick ( e ) {
+        let url = `/items/${ e.target.id }`;
+        fetch( url, {
+            method: "DELETE"
+        } )
+            .then( ( r ) => r.json() )
+            .then( ( deletedObj ) => handleDelete( deletedObj ) );
+    }
+    function handleDelete ( deletedObj ) {
+        let newList = items.filter( ( item ) => item.id !== deletedObj.id );
+        setItem( newList );
+    }
 
     return (
         <Wrapper>
-            { item.length > 0 ? (
-                item.map( ( item ) => (
-                    <Item key={ item.id }>
-                        <Box>
-                            <h2>{ item.name }</h2>
-                            <p>
-                                <em>Stock: { item.quantity } </em>
-                                <cite>By { item.farmer.username }</cite>
-                            </p>
-                        </Box>
-                    </Item>
+            { items.length > 0 ? (
+                items.map( ( item ) => (
+                    <div className="templete box" key={ item.id }>
+                        <img src={ item.image_url } alt={ item.name } className="image" />
+                        <p>{ item.name }</p>
+                        <p>{ item.amount }bags</p>
+                        <div id='btn'>
+                            <button onClick={ handleDeleteClick } id={ item.id } className="delete-btn">Delete</button>
+                            <EditItem id={ item.id } lists={ item } setLists={ setItem } />
+                        </div>
+                    </div>
                 ) )
             ) : (
                 <div>
@@ -43,8 +57,8 @@ const Wrapper = styled.section`
   margin: 40px auto;
 `;
 
-const Item = styled.article`
-  margin-bottom: 24px;
-`;
+// const Item = styled.article`
+//   margin-bottom: 24px;
+// `;
 
 export default ItemList;

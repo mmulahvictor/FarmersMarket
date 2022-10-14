@@ -3,5 +3,4 @@ class Farmer < ApplicationRecord
     has_many :items, dependent: :destroy
     validates :username, presence: true, uniqueness: true
     validates :email, uniqueness: true
-    # has_many :customers, through: :items
 end

@@ -1,5 +1,5 @@
 class FarmersController < ApplicationController
-    # skip_before_action :authorize, only: :create
+    skip_before_action :authorize, only: :create
 
     def create
       farmer = Farmer.create!(farmer_params)

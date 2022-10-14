@@ -1,5 +1,5 @@
 import { useState } from "react";
-// import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { Button, Error, FormField, Input, Label} from "../styles";
 
@@ -9,7 +9,7 @@ function NewItem ( { farmer } ) {
     const [ image, setImage ] = useState("https://rb.gy/dfu1ad");
     const [ errors, setErrors ] = useState( [] );
     const [ isLoading, setIsLoading ] = useState( false );
-    // const history = useHistory();
+    const navigate = useNavigate();
 
     function handleSubmit ( e ) {
         e.preventDefault();
@@ -28,7 +28,7 @@ function NewItem ( { farmer } ) {
             setIsLoading( false );
             if ( r.ok )
             {
-                // history.push( "/" );
+                navigate( "/" );
             } else
             {
                 r.json().then( ( err ) => setErrors( err.errors ) );
@@ -81,12 +81,12 @@ function NewItem ( { farmer } ) {
                 </form>
             </WrapperChild>
             <WrapperChild>
+                <div>{ image }</div>
                 <h1>{ name }</h1>
                 <p>
                     <em>Item : { quantity } </em>
                     <cite>By { farmer.username }</cite>
                 </p>
-                <div>{ image }</div>
             </WrapperChild>
         </Wrapper>
     );
