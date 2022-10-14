@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/https%20//mmulahvictor.github.io/FarmersMarket/static/css/main.c03a3e4d.css",
+    "main.js": "/https%20//mmulahvictor.github.io/FarmersMarket/static/js/main.d29c2e79.js",
+    "index.html": "/https%20//mmulahvictor.github.io/FarmersMarket/index.html",
+    "main.c03a3e4d.css.map": "/https%20//mmulahvictor.github.io/FarmersMarket/static/css/main.c03a3e4d.css.map",
+    "main.d29c2e79.js.map": "/https%20//mmulahvictor.github.io/FarmersMarket/static/js/main.d29c2e79.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c03a3e4d.css",
+    "static/js/main.d29c2e79.js"
+  ]
+}
