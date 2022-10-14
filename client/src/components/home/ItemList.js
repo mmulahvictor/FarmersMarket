@@ -53,8 +53,11 @@ function ItemList () {
 }
 
 const Wrapper = styled.section`
-  max-width: 800px;
-  margin: 40px auto;
+  max-width: 900px;
+  margin: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
 `;
 
 // const Item = styled.article`

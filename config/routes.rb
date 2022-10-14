@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :items, only: [:index, :create, :destroy]
+  resources :items, only: [:index, :create, :destroy, :update]
   post "/signup", to: "farmers#create"
   get "/me", to: "farmers#show"
   post "/login", to: "sessions#create"

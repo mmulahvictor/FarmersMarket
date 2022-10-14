@@ -8,13 +8,22 @@ class ItemsController < ApplicationController
     render json: item, status: :created
   end
 
+  def update
+    item = find_params
+    item.update(toy_params)
+    render json: toy
+  end
+
   def destroy
-    item = Item.find_by(id: params[:id])
-    item.destroy
+    find_params.destroy
     head :no_content
   end
 
   private
+
+  def find_params 
+    Item.find_by(id: params[:id])
+  end
 
   def item_params
     params.permit(:name, :image_url, :quantity)
