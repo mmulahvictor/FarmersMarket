@@ -13,6 +13,8 @@ function ItemList () {
             .then( setItem );
     }, [] );
 
+    
+
     function handleDeleteClick ( e ) {
         let url = `/items/${ e.target.id }`;
         fetch( url, {

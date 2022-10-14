@@ -10,8 +10,8 @@ class ItemsController < ApplicationController
 
   def update
     item = find_params
-    item.update(toy_params)
-    render json: toy
+    item.update(item_params)
+    render json: item
   end
 
   def destroy

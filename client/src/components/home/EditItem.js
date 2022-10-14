@@ -1,13 +1,33 @@
-// import { useState } from 'react';
+import React, { useState } from 'react';
+import Form from './Form';
 
-function EditItem () {
-    // const [ item, setItem ] = useState();
+function EditItem ( { lists, id } ) {
+    const [ isedit, setEditing ] = useState( false );
 
-return (
-    <div>
+    function handleChange ( e ) {
+        e.preventDefault();
+        if ( e )
+        {
+            setEditing( () => !isedit );
+        }
+        console.log( e.target.id );
+        fetch( `/items/${ e.target.id }`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(),
+        } )
+            .then( ( r ) => r.json() );
 
-    </div>
-)
+    }
+
+    return (
+        <div id='hide-card'>
+
+            { isedit ? <Form id={ id } lists={ lists } /> : <button className='edit-btn' onClick={ handleChange } id={ id }>Edit</button> }
+        </div>
+    );
 }
 
 export default EditItem;
